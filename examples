@@ -1,0 +1,49 @@
+Friend Functions and Classes
+class FriendClass;  // Forward declaration
+
+class MyClass {
+private:
+    int privateMember;
+
+public:
+    MyClass() : privateMember(42) {}
+
+    friend class FriendClass;  // Friend class declaration
+};
+
+class FriendClass {
+public:
+    void accessPrivateMember(MyClass& obj) {
+        // Friend class can access private members of MyClass
+        std::cout << "Private Member: " << obj.privateMember << std::endl;
+    }
+};
+
+int main() {
+    MyClass myObject;
+    FriendClass friendObj;
+    friendObj.accessPrivateMember(myObject);
+
+    return 0;
+}
+STL:
+#include <vector>
+#include <iostream>
+
+int main() {
+    std::vector<int> myVector;
+    
+    // Resize vector to contain 5 elements, all initialized to 0
+    myVector.resize(5, 0);
+
+    // Add more elements to the vector
+    myVector.push_back(10);
+    myVector.push_back(20);
+
+    // Display elements in the vector
+    for (int num : myVector) {
+        std::cout << num << " ";
+    }
+
+    return 0;
+}
