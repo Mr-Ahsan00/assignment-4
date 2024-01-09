@@ -1,0 +1,74 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <chrono>
+#include <random>
+
+using namespace std;
+
+// Function to perform Bubble Sort
+void bubbleSort(vector<int>& arr) {
+    int n = arr.size();
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+            }
+        }
+    }
+}
+
+int main() {
+    const int vectorSize = 100000;
+    vector<int> descendingVector(vectorSize);
+
+    // Initialize vector in descending order
+    for (int i = 0; i < vectorSize; ++i) {
+        descendingVector[i] = vectorSize - i;
+    }
+
+    // Start the clock for Bubble Sort
+    auto startTimeBubbleSort = chrono::high_resolution_clock::now();
+
+    // Bubble Sort
+    bubbleSort(descendingVector);
+
+    // Stop the clock for Bubble Sort
+    auto endTimeBubbleSort = chrono::high_resolution_clock::now();
+
+    // Calculate the duration in microseconds for Bubble Sort
+    auto durationBubbleSort = chrono::duration_cast<chrono::microseconds>(endTimeBubbleSort - startTimeBubbleSort);
+
+    // Print the execution time for Bubble Sort
+    cout << "Bubble Sort Execution Time: " << durationBubbleSort.count() << " microseconds\n";
+
+    // Start the clock for STL sort
+    auto startTimeSTLSort = chrono::high_resolution_clock::now();
+
+    // STL Sort
+    sort(descendingVector.begin(), descendingVector.end());
+
+    // Stop the clock for STL sort
+    auto endTimeSTLSort = chrono::high_resolution_clock::now();
+
+    // Calculate the duration in microseconds for STL sort
+    auto durationSTLSort = chrono::duration_cast<chrono::microseconds>(endTimeSTLSort - startTimeSTLSort);
+
+    // Print the execution time for STL sort
+    cout << "STL Sort Execution Time: " << durationSTLSort.count() << " microseconds\n";
+
+    // Print the first 10 and last 10 integers of the sorted vector
+    cout << "First 10 integers: ";
+    for (int i = 0; i < 10; ++i) {
+        cout << descendingVector[i] << " ";
+    }
+
+    cout << "\nLast 10 integers: ";
+    for (int i = vectorSize - 10; i < vectorSize; ++i) {
+        cout << descendingVector[i] << " ";
+    }
+
+    cout << endl;
+
+    return 0;
+}
